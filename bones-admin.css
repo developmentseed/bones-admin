@@ -1,0 +1,163 @@
+body {
+  margin-top:0px;
+  transition:margin .25s;
+  -moz-transition:margin .25s;
+  -webkit-transition:margin .25s;
+  }
+
+#bones-admin-overlay {
+  background:#000;
+  position:fixed;
+  left:0px;
+  right:0px;
+  top:0px;
+  bottom:0px;
+  z-index:-1;
+  opacity:0;
+  transition:opacity .25s;
+  -moz-transition:opacity .25s;
+  -webkit-transition:opacity .25s;
+  }
+
+body.bones-admin-editing #bones-admin-overlay,
+body.bones-admin-modal #bones-admin-overlay {
+  opacity:0.5;
+  z-index:5;
+  }
+
+body.bones-admin-editing #bones-admin .menus,
+body.bones-admin-editing #bones-admin a.toggle { display:none; }
+
+body.bones-admin { margin-top:40px; }
+
+body.bones-admin-editing *[contentEditable=true],
+body.bones-admin-editing textarea.editable {
+  min-height:10px;
+  position:relative;
+  z-index:10;
+  background:rgba(255,255,255,.9);
+  box-shadow:rgba(255,255,255,.9) 0px 0px 5px;
+  -webkit-box-shadow:rgba(255,255,255,.9) 0px 0px 5px;
+  -moz-box-shadow:rgba(255,255,255,.9) 0px 0px 5px;
+  }
+
+textarea.editable {
+  font:normal 13px/20px "Andale Mono",monospace;
+  line-height:20px;
+  padding:0px 5px;
+  width:100%;
+  height:auto;
+  resize:none;
+  overflow-y:hidden;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  }
+
+#bones-admin,
+#bones-admin select,
+#bones-admin input { font:normal 15px/20px Arial,Helvetica,sans-serif; }
+
+#bones-admin {
+  position:fixed;
+  left:0px;
+  right:0px;
+  top:0px;
+  z-index:100;
+
+  height:0px;
+  padding:0px 40px 0px 0px;
+  background:#444;
+  color:#eee;
+  overflow:hidden;
+  transition:height .25s;
+  -moz-transition:height .25s;
+  -webkit-transition:height .25s;
+  }
+
+body.bones-admin #bones-admin { height:40px; }
+
+#bones-admin .panel {
+  float:left;
+  padding:10px;
+  height:20px;
+  }
+
+#bones-admin .menus {
+  float:right;
+  padding:10px;
+  height:20px;
+  }
+
+#bones-admin a.toggle {
+  position:fixed;
+  right:0px;
+  top:0px;
+  display:block;
+  width:40px;
+  height:40px;
+  opacity:0;
+
+  background:url(images/sprite.png) 0px 0px no-repeat;
+  color:#fff;
+  text-indent:-999px;
+  overflow:hidden;
+
+  border-radius:0px 0px 0px 3px;
+  -moz-border-radius:0px 0px 0px 3px;
+  -webkit-border-radius:0px 0px 0px 3px;
+  transition:opacity .25s;
+  -moz-transition:opacity .25s;
+  -webkit-transition:opacity .25s;
+  }
+
+body.bones-admin #bones-admin a.toggle,
+#bones-admin a.toggle:hover { opacity:1; }
+
+body.bones-admin #bones-admin a.toggle {
+  border-radius:0px;
+  -moz-border-radius:0px;
+  -webkit-border-radius:0px;
+  }
+
+#bones-admin select,
+#bones-admin input[type=text],
+#bones-admin input[type=password] {
+  line-height:20px;
+  height:20px;
+  padding:0px 5px;
+
+  color:#fff;
+  background:#666;
+
+  border-radius:3px;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  }
+
+input[type=submit],
+input[type=button] {
+  font-weight:bold;
+  text-shadow:#000 0px -1px 0px;
+
+  padding:0px 10px;
+  background:#666;
+  color:#eee;
+  -webkit-box-shadow:#000 0px 0px 1px;
+
+  cursor:pointer;
+  border-radius:3px;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  }
+
+#bones-admin input.editing { display:none; }
+body.bones-admin-editing #bones-admin input.viewing { display:none; }
+body.bones-admin-editing #bones-admin input.editing { display:inline; }
+

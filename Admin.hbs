@@ -1,0 +1,18 @@
+<div id='bones-admin-overlay'></div>
+<div id='bones-admin'>
+    <div class='panel'></div>
+    <form class='menus login'>
+        {{#authenticated}}
+            <span>Logged in as {{id}}</span>
+            <input type='button' value='Logout' />
+        {{/authenticated}}
+        {{^authenticated}}
+            <label for='username'>Username</label>
+            <input size='10' type='text' name='username' />
+            <label for='password'>Password</label>
+            <input size='10' type='password' name='password' />
+            <input type='button' value='Login' />
+        {{/authenticated}}
+    </form>
+    <a class='toggle' href='#'>Admin</a>
+</div>
