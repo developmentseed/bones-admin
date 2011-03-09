@@ -1,9 +1,13 @@
 var fs = require('fs'),
-    Bones = require('bones');
+    path = require('path'),
+    Bones = require('bones'),
+    templates = ['Admin', 'AdminGrowl'];
 
-// Load AuthView template into Bones templates.
-Bones.templates['Admin'] = Bones.templates['Admin'] ||
-    fs.readFileSync(__dirname + '/Admin.hbs', 'utf-8');
+// Load Admin templates. Blocking at require time.
+templates.forEach(function(template) {
+    Bones.templates[template] = Bones.templates[template] ||
+        fs.readFileSync(path.join(__dirname, template + '.hbs'), 'utf-8');
+});
 
 // Pass through require of bones-admin.
 module.exports = require('./bones-admin');

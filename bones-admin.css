@@ -5,7 +5,7 @@ body {
   -webkit-transition:margin .25s;
   }
 
-#bones-admin-overlay {
+#bonesAdminOverlay {
   background:#000;
   position:fixed;
   left:0px;
@@ -19,19 +19,208 @@ body {
   -webkit-transition:opacity .25s;
   }
 
-body.bones-admin-editing #bones-admin-overlay,
-body.bones-admin-modal #bones-admin-overlay {
+body.bonesAdminEditing #bonesAdminOverlay,
+body.bonesAdminModal #bonesAdminOverlay {
   opacity:0.5;
   z-index:5;
   }
 
-body.bones-admin-editing #bones-admin .menus,
-body.bones-admin-editing #bones-admin a.toggle { display:none; }
+body.bonesAdminEditing #bonesAdmin .menus,
+body.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
 
-body.bones-admin { margin-top:40px; }
+body.bonesAdmin { margin-top:40px; }
 
-body.bones-admin-editing *[contentEditable=true],
-body.bones-admin-editing textarea.editable {
+#bonesAdmin,
+#bonesAdmin select,
+#bonesAdmin input,
+input.editable,
+select.editable { font:normal 15px/20px Arial,Helvetica,sans-serif; }
+
+#bonesAdminToolbar {
+  position:fixed;
+  left:0px;
+  right:0px;
+  top:0px;
+  z-index:100;
+
+  height:0px;
+  padding:0px 40px 0px 0px;
+  background:#444;
+  overflow:hidden;
+  transition:height .25s;
+  -moz-transition:height .25s;
+  -webkit-transition:height .25s;
+  box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
+  -moz-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
+  -webkit-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
+  }
+
+body.bonesAdmin #bonesAdminToolbar {
+  height:40px;
+  overflow:visible;
+  }
+
+#bonesAdmin { color:#eee; }
+#bonesAdmin a { color:#eee; }
+#bonesAdmin a:hover { color:#fe6; }
+
+#bonesAdminToolbar .panel {
+  float:left;
+  padding:10px 0px 10px 20px;
+  height:20px;
+  }
+
+#bonesAdminToolbar .label { margin-right:10px; }
+
+/**
+ * # Dropdown menus ###########################################################
+ */
+#bonesAdmin .menus {
+  float:right;
+  height:40px;
+  }
+
+#bonesAdmin .dropdown {
+  float:left;
+  height:40px;
+  border-left:1px solid #555;
+  position:relative;
+  }
+
+#bonesAdmin .dropdown a {
+  display:block;
+  padding:5px 20px;
+  position:relative;
+  white-space:nowrap;
+  }
+
+#bonesAdmin .dropdown a:hover { background:#222; }
+
+#bonesAdmin .dropdown > a { padding:10px 20px 10px 10px; }
+
+#bonesAdmin .dropdown > a .down {
+  position:absolute;
+  right:0px;
+  top:10px;
+  }
+
+#bonesAdmin .dropdown.expanded > a { background:#222; }
+
+#bonesAdmin .dropdown ul {
+  height:1px;
+  margin:-1px 0px 0px;
+  padding:0px;
+  overflow:hidden;
+  border-radius:0px 0px 5px 5px;
+  -moz-border-radius:0px 0px 5px 5px;
+  -webkit-border-radius:0px 0px 5px 5px;
+  }
+
+#bonesAdmin .dropdown.expanded ul {
+  height:auto;
+  margin:0px;
+  padding:0px 0px 10px;
+  overflow:visible;
+  background:#333;
+  }
+
+/**
+ * # Admin toggler ############################################################
+ */
+#bonesAdmin a.toggle {
+  position:fixed;
+  right:0px;
+  top:0px;
+  display:block;
+  width:40px;
+  height:40px;
+  opacity:0;
+
+  background:url(images/sprite.png) -360px 0px no-repeat;
+  color:#fff;
+  text-indent:-999px;
+  overflow:hidden;
+
+  border-radius:0px 0px 0px 3px;
+  -moz-border-radius:0px 0px 0px 3px;
+  -webkit-border-radius:0px 0px 0px 3px;
+  transition:opacity .25s;
+  -moz-transition:opacity .25s;
+  -webkit-transition:opacity .25s;
+  }
+
+body.bonesAdmin #bonesAdmin a.toggle,
+#bonesAdmin a.toggle:hover { opacity:1; }
+
+body.bonesAdmin #bonesAdmin a.toggle {
+  border-radius:0px;
+  -moz-border-radius:0px;
+  -webkit-border-radius:0px;
+  }
+
+/**
+ * # Form elements ############################################################
+ */
+#bonesAdminToolbar form {
+  padding:10px;
+  height:20px;
+  }
+
+#bonesAdmin select,
+#bonesAdmin input[type=text],
+#bonesAdmin input[type=password] {
+  vertical-align:middle;
+  line-height:20px;
+  height:20px;
+  padding:0px 5px;
+
+  color:#fff;
+  background:#666;
+
+  border-radius:3px;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  }
+
+#bonesAdmin input[type=submit],
+#bonesAdmin input[type=button] {
+  vertical-align:middle;
+  font-weight:bold;
+  text-shadow:#000 0px -1px 0px;
+
+  padding:0px 15px;
+  background:#555;
+  border:1px solid #666;
+  color:#eee;
+  cursor:pointer;
+  border-radius:3px;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  }
+
+#bonesAdmin input[type=submit]:hover,
+#bonesAdmin input[type=button]:hover {
+  background:#666;
+  border-color:#aaa #888 #666;
+  box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
+  -moz-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
+  -webkit-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
+  }
+
+#bonesAdmin input.editing { display:none; }
+body.bonesAdminEditing #bonesAdmin input.viewing { display:none; }
+body.bonesAdminEditing #bonesAdmin input.editing { display:inline; }
+
+body.bonesAdminEditing *[contentEditable=true],
+body.bonesAdminEditing input.editable,
+body.bonesAdminEditing select.editable,
+body.bonesAdminEditing textarea.editable {
   min-height:10px;
   position:relative;
   z-index:10;
@@ -39,6 +228,16 @@ body.bones-admin-editing textarea.editable {
   box-shadow:rgba(255,255,255,.9) 0px 0px 5px;
   -webkit-box-shadow:rgba(255,255,255,.9) 0px 0px 5px;
   -moz-box-shadow:rgba(255,255,255,.9) 0px 0px 5px;
+  }
+
+input.editable,
+select.editable {
+  line-height:20px;
+  height:20px;
+  padding:0px 5px;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
   }
 
 textarea.editable {
@@ -54,110 +253,51 @@ textarea.editable {
   -webkit-box-sizing:border-box;
   }
 
-#bones-admin,
-#bones-admin select,
-#bones-admin input { font:normal 15px/20px Arial,Helvetica,sans-serif; }
-
-#bones-admin {
-  position:fixed;
-  left:0px;
-  right:0px;
-  top:0px;
-  z-index:100;
-
-  height:0px;
-  padding:0px 40px 0px 0px;
-  background:#444;
-  color:#eee;
-  overflow:hidden;
-  transition:height .25s;
-  -moz-transition:height .25s;
-  -webkit-transition:height .25s;
-  }
-
-body.bones-admin #bones-admin { height:40px; }
-
-#bones-admin .panel {
-  float:left;
-  padding:10px;
-  height:20px;
-  }
-
-#bones-admin .menus {
-  float:right;
-  padding:10px;
-  height:20px;
-  }
-
-#bones-admin a.toggle {
-  position:fixed;
-  right:0px;
-  top:0px;
+/**
+ * # Icons ####################################################################
+ */
+#bonesAdmin .icon {
   display:block;
-  width:40px;
-  height:40px;
-  opacity:0;
-
-  background:url(images/sprite.png) 0px 0px no-repeat;
-  color:#fff;
-  text-indent:-999px;
-  overflow:hidden;
-
-  border-radius:0px 0px 0px 3px;
-  -moz-border-radius:0px 0px 0px 3px;
-  -webkit-border-radius:0px 0px 0px 3px;
-  transition:opacity .25s;
-  -moz-transition:opacity .25s;
-  -webkit-transition:opacity .25s;
-  }
-
-body.bones-admin #bones-admin a.toggle,
-#bones-admin a.toggle:hover { opacity:1; }
-
-body.bones-admin #bones-admin a.toggle {
-  border-radius:0px;
-  -moz-border-radius:0px;
-  -webkit-border-radius:0px;
-  }
-
-#bones-admin select,
-#bones-admin input[type=text],
-#bones-admin input[type=password] {
-  line-height:20px;
+  width:20px;
   height:20px;
-  padding:0px 5px;
-
-  color:#fff;
-  background:#666;
-
-  border-radius:3px;
-  -moz-border-radius:3px;
-  -webkit-border-radius:3px;
-  box-sizing:border-box;
-  -moz-box-sizing:border-box;
-  -webkit-box-sizing:border-box;
+  float:left;
+  overflow:hidden;
+  text-indent:-9999px;
+  margin-right:5px;
+  background:url(images/sprite.png) 20px 20px no-repeat;
   }
 
-input[type=submit],
-input[type=button] {
-  font-weight:bold;
-  text-shadow:#000 0px -1px 0px;
+#bonesAdmin .icon.user { background-position:0px 0px; }
+#bonesAdmin .icon.docs { background-position:-20px 0px; }
+#bonesAdmin .icon.down { background-position:-40px 0px; }
+#bonesAdmin .icon.close { background-position:-60px 0px; }
 
-  padding:0px 10px;
-  background:#666;
-  color:#eee;
-  -webkit-box-shadow:#000 0px 0px 1px;
-
-  cursor:pointer;
-  border-radius:3px;
-  -moz-border-radius:3px;
-  -webkit-border-radius:3px;
-  box-sizing:border-box;
-  -moz-box-sizing:border-box;
-  -webkit-box-sizing:border-box;
+#bonesAdminGrowl {
+  position:fixed;
+  right:0px;
+  left:0px;
+  top:40px;
   }
 
-#bones-admin input.editing { display:none; }
-body.bones-admin-editing #bones-admin input.viewing { display:none; }
-body.bones-admin-editing #bones-admin input.editing { display:inline; }
+#bonesAdminGrowl .growl {
+  width:300px;
+  margin:10px 10px 10px auto;
+  padding:10px 30px 10px 20px;
+  position:relative;
+  background:rgba(48,160,64,.95);
+  box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
+  -moz-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
+  -webkit-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
+  border-radius:5px;
+  -moz-border-radius:5px;
+  -webkit-border-radius:5px;
+  }
+
+#bonesAdminGrowl .growl.error { background:rgba(160,64,48,.95); }
+
+#bonesAdminGrowl .growl .close {
+  position:absolute;
+  top:10px;
+  right:10px;
+  }
 
