@@ -5,9 +5,6 @@ body {
   -webkit-transition:margin .25s;
   }
 
-body.bonesAdminEditing #bonesAdmin .menus,
-body.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
-
 body.bonesAdmin { margin-top:40px; }
 
 #bonesAdmin,
@@ -15,7 +12,11 @@ body.bonesAdmin { margin-top:40px; }
 #bonesAdmin select,
 #bonesAdmin input,
 input.editable,
-select.editable { font:normal 15px/20px Arial,Helvetica,sans-serif; }
+select.editable {
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:15px;
+  line-height:20px;
+  }
 
 #bonesAdminToolbar {
   position:fixed;
@@ -149,6 +150,16 @@ body.bonesAdmin #bonesAdmin a.toggle {
 
 #bonesAdminToolbar form.login { float:right; }
 
+#bonesAdminPopup form { margin:-10px -20px; }
+#bonesAdminPopup form > div {
+  padding:10px 20px 9px;
+  border-bottom:1px solid #333;
+  }
+#bonesAdminPopup form div.inline { display:inline-block; }
+#bonesAdminPopup form > div label {
+  display:block;
+  }
+
 #bonesAdmin select,
 #bonesAdmin input[type=text],
 #bonesAdmin input[type=password] {
@@ -278,6 +289,12 @@ body.bonesAdminModal #bonesAdminOverlay {
   z-index:5;
   }
 
+body.bonesAdminModal #bonesAdmin .panel,
+body.bonesAdminModal #bonesAdmin .menus,
+body.bonesAdminModal #bonesAdmin a.toggle,
+body.bonesAdminEditing #bonesAdmin .menus,
+body.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
+
 /**
  * # Growl ####################################################################
  */
@@ -290,7 +307,7 @@ body.bonesAdminModal #bonesAdminOverlay {
   }
 
 #bonesAdminGrowl .growl {
-  width:300px;
+  max-width:400px;
   margin:10px 10px 10px auto;
   padding:10px 30px 10px 20px;
   position:relative;

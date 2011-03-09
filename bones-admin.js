@@ -18,7 +18,7 @@ Bones.views.Admin = Backbone.View.extend({
         'click a[href=#toggle]': 'toggle'
     },
     initialize: function(options) {
-        _.bindAll.apply(this, [this].concat(_.methods(this.__proto__)));
+        _.bindAll(this, 'render', 'attach', 'toggle', 'auth', 'setPanel', 'error');
         this.model.bind('auth', this.render);
         this.model.bind('auth', this.attach);
         this.render().trigger('attach');
@@ -44,14 +44,10 @@ Bones.views.Admin = Backbone.View.extend({
         return false;
     },
     auth: function() {
-        this.model.authenticate(
-            'login',
-            {
-                id: this.$('input[name=username]').val(),
-                password: this.$('input[name=password]').val()
-            },
-            { error: this.error }
-        );
+        this.model.authenticate('login', {
+            id: this.$('input[name=username]').val(),
+            password: this.$('input[name=password]').val()
+        }, { error: this.error });
         this.$('input[name=username], input[name=password]').val('');
         return false;
     },
@@ -62,22 +58,12 @@ Bones.views.Admin = Backbone.View.extend({
             this.$('.panel').empty();
         }
     },
-    growl: function(message, options) {
-        options = options || {};
-        options.message = message;
-        new Bones.views.AdminGrowl(options);
-    },
-    popup: function(title, content) {
-        new Bones.views.AdminPopup({
-            title: title || '',
-            content: content || ''
-        });
-    },
     error: function(model, resp) {
-        this.growl(
-            (resp instanceof XMLHttpRequest) ? resp.response : resp,
-            { classes: 'error', autoclose: 0 }
-        );
+        new Bones.views.AdminGrowl({
+            message: (resp instanceof XMLHttpRequest) ? resp.response : resp,
+            classes: 'error',
+            autoclose: 0
+        });
     }
 });
 
@@ -90,7 +76,7 @@ Bones.views.AdminGrowl = Backbone.View.extend({
         'click a[href=#close]': 'close'
     },
     initialize: function(options) {
-        _.bindAll.apply(this, [this].concat(_.methods(this.__proto__)));
+        _.bindAll(this, 'render', 'close');
         this.options = options || {};
         this.options.message = this.options.message || '';
         this.options.classes = this.options.classes || 'ok';
@@ -123,25 +109,34 @@ Bones.views.AdminGrowl = Backbone.View.extend({
 // View. Modal popup box.
 Bones.views.AdminPopup = Backbone.View.extend({
     className: 'popup',
+    title: '',
+    content: '',
+    view: null,
+    admin: null,
+    context: null,
     events: {
         'click a[href=#close]': 'close'
     },
     initialize: function (options) {
-        _.bindAll.apply(this, [this].concat(_.methods(this.__proto__)));
-        this.options = options || {};
-        this.options.title = options.title || '';
-        this.options.content = options.content || '';
-        this.options.context = this.options.context || $('#bonesAdminPopup');
-        if (this.options.content instanceof Backbone.View) {
-            this.options.view = this.options.content;
-            this.options.content = '';
+        _.bindAll(this, 'render', 'close');
+        options = options || {};
+        this.title = options.title || this.title;
+        this.admin = options.admin || null;
+        this.content = options.content || this.content;
+        this.context = options.context || $('#bonesAdminPopup');
+        // @TODO apparently `this.content instanceof Backbone.View` does not
+        // work here...
+        if (this.content.el) {
+            this.view = this.content;
+            this.content = '';
         }
         this.render();
     },
     render: function () {
-        $(this.el).html(this.template('AdminPopup', this.options));
-        this.options.view && this.$('.popup-content').append(this.options.view.el);
-        this.options.context.append(this.el);
+        var that = this;
+        $(this.el).html(this.template('AdminPopup', this));
+        this.view && this.$('.content').append(this.view.el);
+        this.context.append(this.el);
         $('body')
             .addClass('bonesAdminModal')
             .bind('keyup:AdminPopup', function(e) {
@@ -164,13 +159,16 @@ Bones.views.AdminDropdown = Backbone.View.extend({
     icon: null,
     title: null,
     links: [],
+    admin: null,
+    context:null,
     events: {
         'click a[href=#dropdown]': 'dropdown',
         'click .dropdown ul a': 'dropdown'
     },
     initialize: function (options) {
-        _.bindAll.apply(this, [this].concat(_.methods(this.__proto__)));
+        _.bindAll(this, 'render', 'attach', 'dropdown');
         options = options || {};
+        this.admin = options.admin || null;
         this.context = options.context || $('#bonesAdminToolbar .menus');
         this.render().trigger('attach');
     },
@@ -191,10 +189,16 @@ Bones.views.AdminDropdown = Backbone.View.extend({
     }
 });
 
+// AdminDropdownUser
+// -----------------
+// User management dropdown.
 Bones.views.AdminDropdownUser = Bones.views.AdminDropdown.extend({
     icon: 'user',
     events: _.extend({
-        'click a[href=#logout]': 'logout'
+        'click a[href=#logout]': 'logout',
+        'click a[href=#user]': 'user',
+        'click a[href=#userCreate]': 'userCreate',
+        'click a[href=#userView]': 'userView'
     }, Bones.views.AdminDropdown.prototype.events),
     links: [
         { href: '#user', title: 'My account' },
@@ -203,23 +207,92 @@ Bones.views.AdminDropdownUser = Bones.views.AdminDropdown.extend({
         { href: '#logout', title: 'Logout' },
     ],
     initialize: function(options) {
-        this.admin = options.admin;
         this.title = this.model.id;
+        _.bindAll(this, 'logout', 'user', 'userCreate', 'userView');
         Bones.views.AdminDropdown.prototype.initialize.call(this, options);
     },
     logout: function() {
         this.model.authenticate('logout', {}, { error: this.admin.error });
         return false;
+    },
+    user: function() {
+        new Bones.views.AdminPopupUser({
+            title: 'My account',
+            model: this.model,
+            admin: this.admin
+        });
+        return false;
+    },
+    userCreate: function() {
+        new Bones.views.AdminPopupUser({
+            title: 'Create user',
+            model: new this.model.constructor(),
+            admin: this.admin
+        });
+        return false;
+    },
+    userView: function() {
+        alert('@TODO');
+        return false;
     }
 });
 
+// AdminDropdownDocument
+// ---------------------
+// Document management dropdown. @TODO: belongs in a bones-document module...
 Bones.views.AdminDropdownDocument = Bones.views.AdminDropdown.extend({
     icon: 'docs',
     title: 'Documents',
     links: [
         { href: '#documentCreate', title: 'Create document' },
         { href: '#documentView', title: 'View documents' }
-    ]
+    ],
+    events: _.extend({
+        'click a[href=#documentCreate]': 'documentCreate',
+        'click a[href=#documentView]': 'documentView'
+    }, Bones.views.AdminDropdown.prototype.events),
+    documentCreate: function() {
+        alert('@TODO');
+        return false;
+    },
+    documentView: function() {
+        alert('@TODO');
+        return false;
+    }
+});
+
+// AdminPopupUser
+// --------------
+// User account creation/update popup.
+Bones.views.AdminPopupUser = Bones.views.AdminPopup.extend({
+    events: _.extend({
+        'click input[type=submit]': 'submit'
+    }, Bones.views.AdminPopup.prototype.events),
+    initialize: function (options) {
+        _.bindAll(this, 'submit');
+        this.create = !Boolean(this.model.id);
+        this.content = this.template('AdminFormUser', this.model);
+        Bones.views.AdminPopup.prototype.initialize.call(this, options);
+    },
+    submit: function() {
+        var that = this;
+        var params = {
+            id: this.model.id || this.$('input[name=id]').val(),
+            password: this.$('input[name=password]').val(),
+            passwordConfirm: this.$('input[name=passwordConfirm]').val()
+        };
+        this.model.save(params, {
+            success: function() {
+                var message = that.create
+                    ? 'User ' + that.model.id + ' created.'
+                    : 'Password changed.';
+                new Bones.views.AdminGrowl({message: message});
+                that.close();
+            },
+            error: this.admin.error
+        });
+        return false;
+    }
 });
 
 (typeof module !== 'undefined') && (module.exports = Bones.views);
