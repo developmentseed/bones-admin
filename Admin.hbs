@@ -1,34 +1,9 @@
 <div id='bonesAdminOverlay'></div>
 <div id='bonesAdminGrowl'></div>
+<div id='bonesAdminPopup'></div>
 <div id='bonesAdminToolbar'>
     <div class='panel'></div>
-    <div class='menus clearfix'>
-    {{#authenticated}}
-    <div class='dropdown'>
-        <a href='#dropdown'>
-            <span class='icon down'></span>
-            <span class='icon docs'></span>
-            Documents
-        </a>
-        <ul>
-            <li><a href='#documentNew'>Create document</a></li>
-            <li><a href='#documentView'>View documents</a></li>
-        </ul>
-    </div>
-    <div class='dropdown'>
-        <a href='#dropdown'>
-            <span class='icon down'></span>
-            <span class='icon user'></span>
-            {{id}}
-        </a>
-        <ul>
-            <li><a href='#user'>My account</a></li>
-            <li><a href='#userCreate'>Create user</a></li>
-            <li><a href='#userView'>View users</a></li>
-            <li><a href='#logout'>Logout</a></li>
-        </ul>
-    </div>
-    {{/authenticated}}
+    <div class='menus clearfix'></div>
     {{^authenticated}}
     <form class='login'>
         <label for='username'>Username</label>
@@ -38,6 +13,6 @@
         <input type='button' value='Login' />
     </form>
     {{/authenticated}}
-    </div>
     <a class='toggle' href='#toggle'>Admin</a>
 </div>
+

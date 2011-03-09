@@ -7,12 +7,6 @@ if (typeof process !== 'undefined') {
 Bones = Bones || {};
 Bones.views = Bones.views || {};
 
-Bones.views.AdminGrowl = Backbone.View.extend({
-});
-
-Bones.views.AdminPopup = Backbone.View.extend({
-});
-
 // Admin
 // -----
 // View. Main administrative view. Should be passed an Auth-based model for
@@ -21,46 +15,43 @@ Bones.views.Admin = Backbone.View.extend({
     id: 'bonesAdmin',
     events: {
         'click form.login input[type=button]': 'auth',
-        'click a[href=#dropdown]': 'dropdown',
-        'click .dropdown ul a': 'dropdown',
-        'click a[href=#toggle]': 'toggle',
-        'click a[href=#logout]': 'auth'
+        'click a[href=#toggle]': 'toggle'
     },
     initialize: function(options) {
-        _.bindAll.apply(this, [this].concat(_.methods(Bones.views.Admin.prototype)));
+        _.bindAll.apply(this, [this].concat(_.methods(this.__proto__)));
         this.model.bind('auth', this.render);
-        this.render();
+        this.model.bind('auth', this.attach);
+        this.render().trigger('attach');
     },
     render: function() {
         $(this.el).html(this.template('Admin', this.model));
-        !$('#bonesAdmin').size() && $('body').append(this.el);
-        this.model.authenticated && $('body').addClass('bonesAdmin');
         return this;
     },
-    dropdown: function(ev) {
-        var context = $(ev.currentTarget).parents('.dropdown');
-        if (context.is('.expanded')) {
-            context.toggleClass('expanded');
-        } else {
-            this.$('.dropdown.expanded').removeClass('expanded');
-            context.toggleClass('expanded');
+    attach:function() {
+        !$('#bonesAdmin').size() && $('body').append(this.el);
+        if (this.model.authenticated) {
+            $('body').addClass('bonesAdmin');
+            new Bones.views.AdminDropdownUser({
+                admin: this,
+                model: this.model
+            });
+            new Bones.views.AdminDropdownDocument();
         }
-        return false;
+        return this;
     },
     toggle: function() {
         $('body').toggleClass('bonesAdmin');
         return false;
     },
     auth: function() {
-        var that = this;
-        if (this.model.authenticated) {
-            this.model.authenticate('logout', {}, { error: this.error });
-        } else {
-            this.model.authenticate('login', {
+        this.model.authenticate(
+            'login',
+            {
                 id: this.$('input[name=username]').val(),
                 password: this.$('input[name=password]').val()
-            }, { error: this.error });
-        }
+            },
+            { error: this.error }
+        );
         this.$('input[name=username], input[name=password]').val('');
         return false;
     },
@@ -74,10 +65,13 @@ Bones.views.Admin = Backbone.View.extend({
     growl: function(message, options) {
         options = options || {};
         options.message = message;
-        var growl = new Bones.views.AdminGrowl(options);
-        this.$('#bonesAdminGrowl').append(growl.el);
+        new Bones.views.AdminGrowl(options);
     },
-    popup: function() {
+    popup: function(title, content) {
+        new Bones.views.AdminPopup({
+            title: title || '',
+            content: content || ''
+        });
     },
     error: function(model, resp) {
         this.growl(
@@ -88,7 +82,7 @@ Bones.views.Admin = Backbone.View.extend({
 });
 
 // AdminGrowl
-// ------------
+// ----------
 // View. Single growl message.
 Bones.views.AdminGrowl = Backbone.View.extend({
     className: 'growl',
@@ -96,10 +90,11 @@ Bones.views.AdminGrowl = Backbone.View.extend({
         'click a[href=#close]': 'close'
     },
     initialize: function(options) {
-        _.bindAll(this);
+        _.bindAll.apply(this, [this].concat(_.methods(this.__proto__)));
         this.options = options || {};
         this.options.message = this.options.message || '';
         this.options.classes = this.options.classes || 'ok';
+        this.options.context = this.options.context || $('#bonesAdminGrowl');
         if (_.isUndefined(this.options.autoclose)) {
             this.options.autoclose = 2000;
         }
@@ -113,6 +108,7 @@ Bones.views.AdminGrowl = Backbone.View.extend({
             }))
             .addClass(this.options.classes);
         this.options.autoclose && this.close(this.options.autoclose);
+        this.options.context.append(this.el);
         return this;
     },
     close: function(delay) {
@@ -120,6 +116,110 @@ Bones.views.AdminGrowl = Backbone.View.extend({
         $(this.el).delay(delay).fadeOut(250, this.remove);
         return false;
     }
+});
+
+// AdminPopup
+// ----------
+// View. Modal popup box.
+Bones.views.AdminPopup = Backbone.View.extend({
+    className: 'popup',
+    events: {
+        'click a[href=#close]': 'close'
+    },
+    initialize: function (options) {
+        _.bindAll.apply(this, [this].concat(_.methods(this.__proto__)));
+        this.options = options || {};
+        this.options.title = options.title || '';
+        this.options.content = options.content || '';
+        this.options.context = this.options.context || $('#bonesAdminPopup');
+        if (this.options.content instanceof Backbone.View) {
+            this.options.view = this.options.content;
+            this.options.content = '';
+        }
+        this.render();
+    },
+    render: function () {
+        $(this.el).html(this.template('AdminPopup', this.options));
+        this.options.view && this.$('.popup-content').append(this.options.view.el);
+        this.options.context.append(this.el);
+        $('body')
+            .addClass('bonesAdminModal')
+            .bind('keyup:AdminPopup', function(e) {
+                (e.keyCode == 27) && that.close();
+            });
+        return this;
+    },
+    close: function() {
+        $('body').removeClass('bonesAdminModal');
+        $(this.el).fadeOut(250, this.remove);
+        return false;
+    }
+});
+
+// AdminDropdown
+// -------------
+// View. Menu dropdown view.
+Bones.views.AdminDropdown = Backbone.View.extend({
+    className: 'dropdown',
+    icon: null,
+    title: null,
+    links: [],
+    events: {
+        'click a[href=#dropdown]': 'dropdown',
+        'click .dropdown ul a': 'dropdown'
+    },
+    initialize: function (options) {
+        _.bindAll.apply(this, [this].concat(_.methods(this.__proto__)));
+        options = options || {};
+        this.context = options.context || $('#bonesAdminToolbar .menus');
+        this.render().trigger('attach');
+    },
+    render: function () {
+        $(this.el).html(this.template('AdminDropdown', this));
+        return this;
+    },
+    attach: function () {
+        this.context.prepend(this.el);
+        return this;
+    },
+    dropdown: function(ev) {
+        if (!$(this.el).is('.expanded')) {
+            $('.expanded', this.context).removeClass('expanded');
+        }
+        $(this.el).toggleClass('expanded');
+        return false;
+    }
+});
+
+Bones.views.AdminDropdownUser = Bones.views.AdminDropdown.extend({
+    icon: 'user',
+    events: _.extend({
+        'click a[href=#logout]': 'logout'
+    }, Bones.views.AdminDropdown.prototype.events),
+    links: [
+        { href: '#user', title: 'My account' },
+        { href: '#userCreate', title: 'Create user' },
+        { href: '#userView', title: 'View users' },
+        { href: '#logout', title: 'Logout' },
+    ],
+    initialize: function(options) {
+        this.admin = options.admin;
+        this.title = this.model.id;
+        Bones.views.AdminDropdown.prototype.initialize.call(this, options);
+    },
+    logout: function() {
+        this.model.authenticate('logout', {}, { error: this.admin.error });
+        return false;
+    }
+});
+
+Bones.views.AdminDropdownDocument = Bones.views.AdminDropdown.extend({
+    icon: 'docs',
+    title: 'Documents',
+    links: [
+        { href: '#documentCreate', title: 'Create document' },
+        { href: '#documentView', title: 'View documents' }
+    ]
 });
 
 (typeof module !== 'undefined') && (module.exports = Bones.views);

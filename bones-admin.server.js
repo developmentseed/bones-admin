@@ -1,7 +1,7 @@
 var fs = require('fs'),
     path = require('path'),
     Bones = require('bones'),
-    templates = ['Admin', 'AdminGrowl'];
+    templates = ['Admin', 'AdminDropdown', 'AdminGrowl', 'AdminPopup'];
 
 // Load Admin templates. Blocking at require time.
 templates.forEach(function(template) {
