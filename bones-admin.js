@@ -4,7 +4,7 @@ if (typeof process !== 'undefined') {
     Bones = require('bones');
 }
 
-Bones = Bones || {};
+var Bones = Bones || {};
 Bones.views = Bones.views || {};
 
 // Admin
