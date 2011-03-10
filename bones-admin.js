@@ -275,4 +275,13 @@ Bones.views.AdminPopupUser = Bones.views.AdminPopup.extend({
     }
 });
 
-(typeof module !== 'undefined') && (module.exports = Bones.views);
+(typeof module !== 'undefined') && (module.exports = {
+    views: {
+        Admin: Bones.views.Admin,
+        AdminGrowl: Bones.views.AdminGrowl,
+        AdminPopup: Bones.views.AdminPopup,
+        AdminDropdown: Bones.views.AdminDropdown,
+        AdminDropdownUser: Bones.views.AdminDropdownUser,
+        AdminPopupUser: Bones.views.AdminPopupUser
+    }
+});
