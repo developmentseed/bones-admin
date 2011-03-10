@@ -9,16 +9,21 @@ Bones.views = Bones.views || {};
 
 // Admin
 // -----
-// View. Main administrative view. Should be passed an Auth-based model for
-// handling login.
+// Main administrative view.
+//
+// - `options.model` Instantiated auth-based model for handling login.
+// - `options.dropdowns` Array of dropdown view classes. Optional.
 Bones.views.Admin = Backbone.View.extend({
     id: 'bonesAdmin',
+    dropdowns: [ Bones.views.AdminDropdownUser ],
     events: {
-        'click form.login input[type=button]': 'auth',
+        'click form.login input[type=submit]': 'auth',
         'click a[href=#toggle]': 'toggle'
     },
     initialize: function(options) {
         _.bindAll(this, 'render', 'attach', 'toggle', 'auth', 'setPanel', 'error');
+        options = options || {};
+        this.dropdowns = options.dropdowns || this.dropdowns,
         this.model.bind('auth', this.render);
         this.model.bind('auth', this.attach);
         this.render().trigger('attach');
@@ -28,14 +33,13 @@ Bones.views.Admin = Backbone.View.extend({
         return this;
     },
     attach:function() {
+        var that = this;
         !$('#bonesAdmin').size() && $('body').append(this.el);
         if (this.model.authenticated) {
             $('body').addClass('bonesAdmin');
-            new Bones.views.AdminDropdownUser({
-                admin: this,
-                model: this.model
+            _.each(this.dropdowns, function(Dropdown) {
+                new Dropdown({admin: that, model: that.model});
             });
-            new Bones.views.AdminDropdownDocument();
         }
         return this;
     },
@@ -69,7 +73,7 @@ Bones.views.Admin = Backbone.View.extend({
 
 // AdminGrowl
 // ----------
-// View. Single growl message.
+// Single growl message.
 Bones.views.AdminGrowl = Backbone.View.extend({
     className: 'growl',
     events: {
@@ -106,7 +110,7 @@ Bones.views.AdminGrowl = Backbone.View.extend({
 
 // AdminPopup
 // ----------
-// View. Modal popup box.
+// Modal popup box.
 Bones.views.AdminPopup = Backbone.View.extend({
     className: 'popup',
     title: '',
@@ -153,7 +157,7 @@ Bones.views.AdminPopup = Backbone.View.extend({
 
 // AdminDropdown
 // -------------
-// View. Menu dropdown view.
+// Menu dropdown view.
 Bones.views.AdminDropdown = Backbone.View.extend({
     className: 'dropdown',
     icon: null,
@@ -232,30 +236,6 @@ Bones.views.AdminDropdownUser = Bones.views.AdminDropdown.extend({
         return false;
     },
     userView: function() {
-        alert('@TODO');
-        return false;
-    }
-});
-
-// AdminDropdownDocument
-// ---------------------
-// Document management dropdown. @TODO: belongs in a bones-document module...
-Bones.views.AdminDropdownDocument = Bones.views.AdminDropdown.extend({
-    icon: 'docs',
-    title: 'Documents',
-    links: [
-        { href: '#documentCreate', title: 'Create document' },
-        { href: '#documentView', title: 'View documents' }
-    ],
-    events: _.extend({
-        'click a[href=#documentCreate]': 'documentCreate',
-        'click a[href=#documentView]': 'documentView'
-    }, Bones.views.AdminDropdown.prototype.events),
-    documentCreate: function() {
-        alert('@TODO');
-        return false;
-    },
-    documentView: function() {
         alert('@TODO');
         return false;
     }

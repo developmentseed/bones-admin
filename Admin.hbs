@@ -5,12 +5,12 @@
     <div class='panel'></div>
     <div class='menus clearfix'></div>
     {{^authenticated}}
-    <form class='login'>
+    <form action='/' method='post' class='login'>
         <label for='username'>Username</label>
         <input size='10' type='text' name='username' />
         <label for='password'>Password</label>
         <input size='10' type='password' name='password' />
-        <input type='button' value='Login' />
+        <input type='submit' value='Login' />
     </form>
     {{/authenticated}}
     <a class='toggle' href='#toggle'>Admin</a>
