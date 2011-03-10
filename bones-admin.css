@@ -201,10 +201,21 @@ body.bonesAdmin #bonesAdmin a.toggle {
 #bonesAdmin input[type=submit]:hover,
 #bonesAdmin input[type=button]:hover {
   background:#666;
-  border-color:#aaa #888 #666;
+  color:#fff;
+  border-color:#888 #888 #777;
   box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
   -moz-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
   -webkit-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
+  }
+
+#bonesAdmin input[type=submit]:active,
+#bonesAdmin input[type=button]:active {
+  background:#333;
+  color:#ccc;
+  border-color:#222 #222 #666;
+  box-shadow:inset rgba(0,0,0,.5) 0px 0px 5px;
+  -moz-box-shadow:inset rgba(0,0,0,.5) 0px 0px 5px;
+  -webkit-box-shadow:inset rgba(0,0,0,.5) 0px 0px 5px;
   }
 
 #bonesAdmin input.editing { display:none; }
@@ -308,9 +319,12 @@ body.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
 
 #bonesAdminGrowl .growl {
   max-width:400px;
+  min-height:20px;
   margin:10px 10px 10px auto;
-  padding:10px 30px 10px 20px;
+  padding:10px 40px 10px 20px;
   position:relative;
+  float:right;
+  clear:right;
   background:rgba(48,160,64,.95);
   box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
   -moz-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
