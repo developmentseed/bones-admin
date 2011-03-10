@@ -6,7 +6,7 @@ var fs = require('fs'),
 // Load Admin templates. Blocking at require time.
 templates.forEach(function(template) {
     Bones.templates[template] = Bones.templates[template] ||
-        fs.readFileSync(path.join(__dirname, template + '.hbs'), 'utf-8');
+        fs.readFileSync(path.join(__dirname, 'templates', template + '.hbs'), 'utf-8');
 });
 
 // Pass through require of bones-admin.
