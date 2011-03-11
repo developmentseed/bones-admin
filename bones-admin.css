@@ -344,20 +344,23 @@ body.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
   z-index:5;
   }
 
+#bonesAdminPopup .AdminPage,
 #bonesAdminPopup .AdminPopup {
   position:fixed;
   left:50%;
   top:80px;
   width:600px;
   margin:0px 0px 0px -300px;
-  background:#444;
   box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
   -moz-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
   -webkit-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
   }
 
 #bonesAdminPopup .header {
-  position:relative;
+  position:absolute;
+  top:0px;
+  left:0px;
+  right:0px;
   height:20px;
   padding:10px 20px;
   background:#333;
@@ -374,36 +377,19 @@ body.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
   top:0px;
   }
 
-#bonesAdminPopup .content { padding:10px 20px; }
-
-#bonesAdminPopup .AdminPage .header {
-  background:#444;
-  position:fixed;
+#bonesAdminPopup .content {
+  position:absolute;
+  top:40px;
   left:0px;
-  top:0px;
   right:0px;
-  box-shadow:none;
-  -moz-box-shadow:none;
-  -webkit-box-shadow:none;
-  }
-
-#bonesAdminPopup .AdminPage .content {
-  position:fixed;
-  left:40px;
-  right:40px;
-  top:80px;
-  bottom:40px;
   padding:10px 20px;
-  background:rgba(32,32,32,.75);
-  box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
-  -moz-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
-  -webkit-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
+  overflow:auto;
+  max-height:400px;
+  background:#444;
   }
 
-#bonesAdminPopup .content > ul,
 #bonesAdminPopup .content > form { margin:-10px -20px; }
 
-#bonesAdminPopup .content > ul li,
 #bonesAdminPopup .content > form > div {
   padding:10px 20px 9px;
   border-bottom:1px solid #333;
@@ -413,12 +399,46 @@ body.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
 #bonesAdminPopup form div.inline { display:inline-block; }
 
 /**
- * # Lists ####################################################################
+ * # AdminPage ################################################################
+ * Full-ish screen variant of AdminPopup.
  */
-#bonesAdminPopup li { position:relative; }
-#bonesAdminPopup li .actions {
-  position:absolute;
-  right:20px;
-  top:10px;
+#bonesAdminPopup .AdminPage {
+  position:fixed;
+  left:40px;
+  top:80px;
+  right:40px;
+  bottom:40px;
+  margin:0px;
+  width:auto;
+  background:#444;
   }
+
+#bonesAdminPopup .AdminPage .content {
+  max-height:auto;
+  bottom:0px;
+  }
+
+/**
+ * # AdminTable ###############################################################
+ */
+#bonesAdmin .AdminTable .content { padding:0px; }
+#bonesAdmin .AdminTable table { width:100%; }
+
+#bonesAdmin .AdminTable td,
+#bonesAdmin .AdminTable th {
+  background:#444;
+  padding:10px 20px 9px;
+  border-bottom:1px solid #333;
+  }
+
+#bonesAdmin .AdminTable tr:hover td { background:#4c4c4c; }
+
+#bonesAdmin .AdminTable th {
+  text-align:left;
+  font-size:12px;
+  background:#333;
+  color:#acc;
+  }
+
+#bonesAdmin .AdminTable .actions { text-align:right; }
 
