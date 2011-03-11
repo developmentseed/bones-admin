@@ -301,7 +301,7 @@ body.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
  * # Growl ####################################################################
  */
 #bonesAdminGrowl {
-  position:absolute;
+  position:fixed;
   right:0px;
   left:0px;
   top:40px;
@@ -337,7 +337,7 @@ body.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
  * # Popup ####################################################################
  */
 #bonesAdminPopup {
-  position:absolute;
+  position:fixed;
   left:0px;
   top:0px;
   right:0px;

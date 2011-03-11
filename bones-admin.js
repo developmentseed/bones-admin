@@ -321,7 +321,7 @@ Bones.views.AdminTableRow = Backbone.View.extend({
 Bones.views.AdminTableRowUser = Bones.views.AdminTableRow.extend({
     initialize: function(options) {
         _.bindAll(this, 'render');
-        this.render().trigger('attach');
+        Bones.views.AdminTableRow.prototype.initialize.call(this, options);
     },
     render: function () {
         $(this.el).html(this.template('AdminTableRowUser', this.model));
