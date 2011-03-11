@@ -8,7 +8,8 @@ var fs = require('fs'),
         'AdminGrowl',
         'AdminPopup',
         'AdminTable',
-        'AdminTableRow'
+        'AdminTableRow',
+        'AdminTableRowUser'
     ];
 
 // Load Admin templates. Blocking at require time.

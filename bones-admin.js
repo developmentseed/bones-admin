@@ -247,7 +247,8 @@ Bones.views.AdminDropdownUser = Bones.views.AdminDropdown.extend({
             header: [
                 {title:'Username'},
                 {title:'Actions', className:'actions'}
-            ]
+            ],
+            rowView: Bones.views.AdminTableRowUser
         });
         return false;
     }
@@ -287,6 +288,7 @@ Bones.views.AdminPopupUser = Bones.views.AdminPopup.extend({
     }
 });
 
+
 // AdminTableRow
 // -------------
 // Generic table row view.
@@ -307,6 +309,20 @@ Bones.views.AdminTableRow = Backbone.View.extend({
         if (!confirm('Are you sure you want to delete this item?')) return false;
         this.model.destroy({ success: this.remove });
         return false;
+    }
+});
+
+// AdminTableRowUser
+// -----------------
+// Custom table row for users.
+Bones.views.AdminTableRowUser = Bones.views.AdminTableRow.extend({
+    initialize: function(options) {
+        _.bindAll(this, 'render');
+        this.render().trigger('attach');
+    },
+    render: function () {
+        $(this.el).html(this.template('AdminTableRowUser', this.model));
+        return this;
     }
 });
 
