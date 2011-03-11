@@ -45,6 +45,9 @@ Bones.views.Admin = Backbone.View.extend({
     },
     toggle: function() {
         $('body').toggleClass('bonesAdmin');
+        if ($('body').is('.bonesAdmin') && !this.model.authenticated) {
+            this.$('input[name=username]').focus();
+        }
         return false;
     },
     auth: function() {
