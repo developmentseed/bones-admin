@@ -75,7 +75,7 @@ Bones.views.Admin = Backbone.View.extend({
 // ----------
 // Single growl message.
 Bones.views.AdminGrowl = Backbone.View.extend({
-    className: 'growl',
+    className: 'AdminGrowl',
     events: {
         'click a[href=#close]': 'close'
     },
@@ -112,7 +112,7 @@ Bones.views.AdminGrowl = Backbone.View.extend({
 // ----------
 // Modal popup box.
 Bones.views.AdminPopup = Backbone.View.extend({
-    className: 'popup',
+    className: 'AdminPopup',
     title: '',
     content: '',
     view: null,
@@ -137,19 +137,23 @@ Bones.views.AdminPopup = Backbone.View.extend({
         this.render();
     },
     render: function () {
+        if (this.$('.content').size()) return this;
+
         var that = this;
         $(this.el).html(this.template('AdminPopup', this));
         this.view && this.$('.content').append(this.view.el);
         this.context.append(this.el);
         $('body')
             .addClass('bonesAdminModal')
-            .bind('keyup:AdminPopup', function(e) {
+            .bind('keyup.AdminPopup', function(e) {
                 (e.keyCode == 27) && that.close();
             });
         return this;
     },
     close: function() {
-        $('body').removeClass('bonesAdminModal');
+        $('body')
+            .removeClass('bonesAdminModal')
+            .unbind('.AdminPopup');
         $(this.el).fadeOut(250, this.remove);
         return false;
     }
@@ -236,7 +240,11 @@ Bones.views.AdminDropdownUser = Bones.views.AdminDropdown.extend({
         return false;
     },
     userView: function() {
-        alert('@TODO');
+        new Bones.views.AdminPopupUsers({
+            title: 'Users',
+            collection: new Bones.models.Users(),
+            admin: this.admin
+        });
         return false;
     }
 });
@@ -275,6 +283,55 @@ Bones.views.AdminPopupUser = Bones.views.AdminPopup.extend({
     }
 });
 
+// AdminPopupUsers
+// ---------------
+// List user accounts.
+Bones.views.AdminPopupUsers = Bones.views.AdminPopup.extend({
+    initialize: function(options) {
+        _.bindAll(this, 'render');
+        this.content = '<ul class="users"></ul>';
+        this.collection.bind('all', this.render);
+        this.collection.fetch();
+        Bones.views.AdminPopup.prototype.initialize.call(this, options);
+    },
+    render: function () {
+        var that = this;
+        Bones.views.AdminPopup.prototype.render.call(this);
+        this.collection.each(function(model) {
+            if (model.view) return;
+            model.view = new Bones.views.AdminItemUser({model: model});
+            that.$('.users').append(model.view.el);
+        });
+        return this;
+    }
+});
+
+// AdminItemUser
+// -------------
+// Single user account in AdminPopupUsers.
+Bones.views.AdminItemUser = Backbone.View.extend({
+    tagName: 'li',
+    events: {
+        'click input.delete': 'del'
+    },
+    initialize: function(options) {
+        _.bindAll(this, 'render', 'del');
+        this.render().trigger('attach');
+    },
+    render: function () {
+        var that = this;
+        $(this.el).html(this.template('AdminItemUser', this.model));
+        return this;
+    },
+    del: function() {
+        var that = this;
+        confirm('Are you sure you want to delete this user?') && this.model.destroy({
+            success: function(model, resp) { that.remove() }
+        });
+        return false;
+    }
+});
+
 (typeof module !== 'undefined') && (module.exports = {
     views: {
         Admin: Bones.views.Admin,
@@ -282,6 +339,8 @@ Bones.views.AdminPopupUser = Bones.views.AdminPopup.extend({
         AdminPopup: Bones.views.AdminPopup,
         AdminDropdown: Bones.views.AdminDropdown,
         AdminDropdownUser: Bones.views.AdminDropdownUser,
-        AdminPopupUser: Bones.views.AdminPopupUser
+        AdminPopupUser: Bones.views.AdminPopupUser,
+        AdminPopupUsers: Bones.views.AdminPopupUsers,
+        AdminItemUser: Bones.views.AdminItemUser
     }
 });

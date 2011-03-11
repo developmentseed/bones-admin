@@ -1,8 +1,9 @@
 body {
   margin-top:0px;
-  transition:margin .25s;
-  -moz-transition:margin .25s;
-  -webkit-transition:margin .25s;
+  overflow-y:scroll;
+  transition:margin.25s;
+  -moz-transition:margin.25s;
+  -webkit-transition:margin.25s;
   }
 
 body.bonesAdmin { margin-top:40px; }
@@ -23,7 +24,7 @@ select.editable {
   left:0px;
   right:0px;
   top:0px;
-  z-index:100;
+  z-index:5;
 
   height:0px;
   padding:0px 40px 0px 0px;
@@ -149,16 +150,6 @@ body.bonesAdmin #bonesAdmin a.toggle {
   }
 
 #bonesAdminToolbar form.login { float:right; }
-
-#bonesAdminPopup form { margin:-10px -20px; }
-#bonesAdminPopup form > div {
-  padding:10px 20px 9px;
-  border-bottom:1px solid #333;
-  }
-#bonesAdminPopup form div.inline { display:inline-block; }
-#bonesAdminPopup form > div label {
-  display:block;
-  }
 
 #bonesAdmin select,
 #bonesAdmin input[type=text],
@@ -310,14 +301,14 @@ body.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
  * # Growl ####################################################################
  */
 #bonesAdminGrowl {
-  position:fixed;
+  position:absolute;
   right:0px;
   left:0px;
   top:40px;
   z-index:5;
   }
 
-#bonesAdminGrowl .growl {
+#bonesAdminGrowl .AdminGrowl {
   max-width:400px;
   min-height:20px;
   margin:10px 10px 10px auto;
@@ -334,9 +325,9 @@ body.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
   -webkit-border-radius:5px;
   }
 
-#bonesAdminGrowl .growl.error { background:rgba(160,64,48,.95); }
+#bonesAdminGrowl .AdminGrowl.error { background:rgba(160,64,48,.95); }
 
-#bonesAdminGrowl .growl .close {
+#bonesAdminGrowl .close {
   position:absolute;
   top:10px;
   right:10px;
@@ -346,13 +337,14 @@ body.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
  * # Popup ####################################################################
  */
 #bonesAdminPopup {
-  position:fixed;
+  position:absolute;
   left:0px;
   top:0px;
+  right:0px;
   z-index:5;
   }
 
-#bonesAdminPopup .popup {
+#bonesAdminPopup .AdminPopup {
   position:fixed;
   left:50%;
   top:80px;
@@ -364,22 +356,69 @@ body.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
   -webkit-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
   }
 
-#bonesAdminPopup .popup > .header {
+#bonesAdminPopup .header {
   position:relative;
   height:20px;
   padding:10px 20px;
   background:#333;
   }
 
-#bonesAdminPopup .popup > .header h2 { font-weight:bold; }
+#bonesAdminPopup .header h2 { font-weight:bold; }
 
-#bonesAdminPopup .popup > .header .close {
+#bonesAdminPopup .header .close {
+  background-color:#222;
+  border:10px solid #222;
+  margin:0px;
   position:absolute;
-  right:10px;
-  top:10px;
+  right:0px;
+  top:0px;
   }
 
-#bonesAdminPopup .popup > .content {
+#bonesAdminPopup .content { padding:10px 20px; }
+
+#bonesAdminPopup .AdminPage .header {
+  background:#444;
+  position:fixed;
+  left:0px;
+  top:0px;
+  right:0px;
+  box-shadow:none;
+  -moz-box-shadow:none;
+  -webkit-box-shadow:none;
+  }
+
+#bonesAdminPopup .AdminPage .content {
+  position:fixed;
+  left:40px;
+  right:40px;
+  top:80px;
+  bottom:40px;
   padding:10px 20px;
+  background:rgba(32,32,32,.75);
+  box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
+  -moz-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
+  -webkit-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
+  }
+
+#bonesAdminPopup .content > ul,
+#bonesAdminPopup .content > form { margin:-10px -20px; }
+
+#bonesAdminPopup .content > ul li,
+#bonesAdminPopup .content > form > div {
+  padding:10px 20px 9px;
+  border-bottom:1px solid #333;
+  }
+
+#bonesAdminPopup form > div label { display:block; }
+#bonesAdminPopup form div.inline { display:inline-block; }
+
+/**
+ * # Lists ####################################################################
+ */
+#bonesAdminPopup li { position:relative; }
+#bonesAdminPopup li .actions {
+  position:absolute;
+  right:20px;
+  top:10px;
   }
 
