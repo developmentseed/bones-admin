@@ -12,7 +12,7 @@ var fs = require('fs'),
         'AdminTableRowUser'
     ];
 
-// Load Admin templates. Blocking at require time.
+// Load templates. Blocking at require time.
 templates.forEach(function(template) {
     Bones.templates[template] = Bones.templates[template] ||
         fs.readFileSync(path.join(__dirname, 'templates', template + '.hbs'), 'utf-8');
