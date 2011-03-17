@@ -414,7 +414,7 @@ body.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
   }
 
 #bonesAdminPopup .AdminPage .content {
-  max-height:auto;
+  max-height:none;
   bottom:0px;
   }
 
