@@ -2,17 +2,9 @@
 <div id='bonesAdminPopup'></div>
 <div id='bonesAdminGrowl'></div>
 <div id='bonesAdminToolbar'>
-    <div class='panel'></div>
+    <div class='panel clearfix'></div>
     <div class='menus clearfix'></div>
-    {{^authenticated}}
-    <form action='/' method='post' class='login'>
-        <label for='username'>Username</label>
-        <input size='10' type='text' name='username' />
-        <label for='password'>Password</label>
-        <input size='10' type='password' name='password' />
-        <input type='submit' value='Login' />
-    </form>
-    {{/authenticated}}
+    <div class='auth clearfix'></div>
     <a class='toggle' href='#toggle'>Admin</a>
 </div>
 

@@ -11,19 +11,21 @@ Bones.views = Bones.views || {};
 // -----
 // Main administrative view.
 //
+// - `options.auth` View class to be used for user authentication.
 // - `options.model` Instantiated auth-based model for handling login.
 // - `options.dropdowns` Array of dropdown view classes. Optional.
 Bones.views.Admin = Backbone.View.extend({
     id: 'bonesAdmin',
     dropdowns: [],
+    auth: null,
     events: {
-        'click form.login input[type=submit]': 'auth',
         'click a[href=#toggle]': 'toggle'
     },
     initialize: function(options) {
-        _.bindAll(this, 'render', 'attach', 'toggle', 'auth', 'setPanel', 'error');
+        _.bindAll(this, 'render', 'attach', 'toggle', 'setPanel', 'error');
         options = options || {};
-        this.dropdowns = options.dropdowns || this.dropdowns,
+        this.dropdowns = options.dropdowns || this.dropdowns;
+        this.auth = options.auth || this.auth;
         this.model.bind('auth', this.render);
         this.model.bind('auth', this.attach);
         this.render().trigger('attach');
@@ -40,22 +42,13 @@ Bones.views.Admin = Backbone.View.extend({
             _.each(this.dropdowns, function(Dropdown) {
                 new Dropdown({admin: that, model: that.model});
             });
+        } else {
+            this.auth && (new this.auth({admin: that, model: that.model}));
         }
         return this;
     },
     toggle: function() {
         $('body').toggleClass('bonesAdmin');
-        if ($('body').is('.bonesAdmin') && !this.model.authenticated) {
-            this.$('input[name=username]').focus();
-        }
-        return false;
-    },
-    auth: function() {
-        this.model.authenticate('login', {
-            id: this.$('input[name=username]').val(),
-            password: this.$('input[name=password]').val()
-        }, { error: this.error });
-        this.$('input[name=username], input[name=password]').val('');
         return false;
     },
     setPanel: function(view) {
