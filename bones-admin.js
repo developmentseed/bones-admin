@@ -15,7 +15,7 @@ Bones.views = Bones.views || {};
 // - `options.dropdowns` Array of dropdown view classes. Optional.
 Bones.views.Admin = Backbone.View.extend({
     id: 'bonesAdmin',
-    dropdowns: [ Bones.views.AdminDropdownUser ],
+    dropdowns: [],
     events: {
         'click form.login input[type=submit]': 'auth',
         'click a[href=#toggle]': 'toggle'
@@ -200,98 +200,6 @@ Bones.views.AdminDropdown = Backbone.View.extend({
     }
 });
 
-// AdminDropdownUser
-// -----------------
-// User management dropdown.
-Bones.views.AdminDropdownUser = Bones.views.AdminDropdown.extend({
-    icon: 'user',
-    events: _.extend({
-        'click a[href=#logout]': 'logout',
-        'click a[href=#user]': 'user',
-        'click a[href=#userCreate]': 'userCreate',
-        'click a[href=#userView]': 'userView'
-    }, Bones.views.AdminDropdown.prototype.events),
-    links: [
-        { href: '#user', title: 'My account' },
-        { href: '#userCreate', title: 'Create user' },
-        { href: '#userView', title: 'View users' },
-        { href: '#logout', title: 'Logout' },
-    ],
-    initialize: function(options) {
-        this.title = this.model.id;
-        _.bindAll(this, 'logout', 'user', 'userCreate', 'userView');
-        Bones.views.AdminDropdown.prototype.initialize.call(this, options);
-    },
-    logout: function() {
-        this.model.authenticate('logout', {}, { error: this.admin.error });
-        return false;
-    },
-    user: function() {
-        new Bones.views.AdminPopupUser({
-            title: 'My account',
-            model: this.model,
-            admin: this.admin
-        });
-        return false;
-    },
-    userCreate: function() {
-        new Bones.views.AdminPopupUser({
-            title: 'Create user',
-            model: new this.model.constructor(),
-            admin: this.admin
-        });
-        return false;
-    },
-    userView: function() {
-        new Bones.views.AdminTable({
-            title: 'Users',
-            collection: new Bones.models.Users(),
-            admin: this.admin,
-            header: [
-                {title:'Username'},
-                {title:'Actions', className:'actions'}
-            ],
-            rowView: Bones.views.AdminTableRowUser
-        });
-        return false;
-    }
-});
-
-// AdminPopupUser
-// --------------
-// User account creation/update popup.
-Bones.views.AdminPopupUser = Bones.views.AdminPopup.extend({
-    events: _.extend({
-        'click input[type=submit]': 'submit'
-    }, Bones.views.AdminPopup.prototype.events),
-    initialize: function (options) {
-        _.bindAll(this, 'submit');
-        this.create = !Boolean(this.model.id);
-        this.content = this.template('AdminFormUser', this.model);
-        Bones.views.AdminPopup.prototype.initialize.call(this, options);
-    },
-    submit: function() {
-        var that = this;
-        var params = {
-            id: this.model.id || this.$('input[name=id]').val(),
-            password: this.$('input[name=password]').val(),
-            passwordConfirm: this.$('input[name=passwordConfirm]').val()
-        };
-        this.model.save(params, {
-            success: function() {
-                var message = that.create
-                    ? 'User ' + that.model.id + ' created.'
-                    : 'Password changed.';
-                new Bones.views.AdminGrowl({message: message});
-                that.close();
-            },
-            error: this.admin.error
-        });
-        return false;
-    }
-});
-
-
 // AdminTableRow
 // -------------
 // Generic table row view.
@@ -312,20 +220,6 @@ Bones.views.AdminTableRow = Backbone.View.extend({
         if (!confirm('Are you sure you want to delete this item?')) return false;
         this.model.destroy({ success: this.remove });
         return false;
-    }
-});
-
-// AdminTableRowUser
-// -----------------
-// Custom table row for users.
-Bones.views.AdminTableRowUser = Bones.views.AdminTableRow.extend({
-    initialize: function(options) {
-        _.bindAll(this, 'render');
-        Bones.views.AdminTableRow.prototype.initialize.call(this, options);
-    },
-    render: function () {
-        $(this.el).html(this.template('AdminTableRowUser', this.model));
-        return this;
     }
 });
 
@@ -367,9 +261,6 @@ Bones.views.AdminTable = Bones.views.AdminPopup.extend({
         AdminGrowl: Bones.views.AdminGrowl,
         AdminPopup: Bones.views.AdminPopup,
         AdminDropdown: Bones.views.AdminDropdown,
-        AdminDropdownUser: Bones.views.AdminDropdownUser,
-        AdminPopupUser: Bones.views.AdminPopupUser,
-        AdminPopupUsers: Bones.views.AdminPopupUsers,
         AdminTableRow: Bones.views.AdminTableRow,
         AdminTable: Bones.views.AdminTable
     }

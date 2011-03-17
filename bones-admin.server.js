@@ -4,12 +4,10 @@ var fs = require('fs'),
     templates = [
         'Admin',
         'AdminDropdown',
-        'AdminFormUser',
         'AdminGrowl',
         'AdminPopup',
         'AdminTable',
-        'AdminTableRow',
-        'AdminTableRowUser'
+        'AdminTableRow'
     ];
 
 // Load templates. Blocking at require time.
