@@ -19,7 +19,7 @@ Bones.views.Admin = Backbone.View.extend({
     dropdowns: [],
     auth: null,
     events: {
-        'click a[href=#toggle]': 'toggle'
+        'click a[href$=#toggle]': 'toggle'
     },
     initialize: function(options) {
         _.bindAll(this, 'render', 'attach', 'toggle', 'setPanel', 'error');
@@ -73,7 +73,7 @@ Bones.views.Admin = Backbone.View.extend({
 Bones.views.AdminGrowl = Backbone.View.extend({
     className: 'AdminGrowl',
     events: {
-        'click a[href=#close]': 'close'
+        'click a[href$=#close]': 'close'
     },
     initialize: function(options) {
         _.bindAll(this, 'render', 'close');
@@ -115,7 +115,7 @@ Bones.views.AdminPopup = Backbone.View.extend({
     admin: null,
     context: null,
     events: {
-        'click a[href=#close]': 'close'
+        'click a[href$=#close]': 'close'
     },
     initialize: function (options) {
         _.bindAll(this, 'render', 'close');
@@ -166,7 +166,7 @@ Bones.views.AdminDropdown = Backbone.View.extend({
     admin: null,
     context:null,
     events: {
-        'click a[href=#dropdown]': 'dropdown',
+        'click a[href$=#dropdown]': 'dropdown',
         'click .dropdown ul a': 'dropdown'
     },
     initialize: function (options) {

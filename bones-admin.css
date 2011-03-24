@@ -1,8 +1,8 @@
 body {
   margin-top:0px;
-  transition:margin.25s;
-  -moz-transition:margin.25s;
-  -webkit-transition:margin.25s;
+  transition:margin .25s;
+  -moz-transition:margin .25s;
+  -webkit-transition:margin .25s;
   }
 
 body.bonesAdmin { margin-top:40px; }
@@ -227,6 +227,7 @@ body.bonesAdminEditing textarea.editable {
   box-shadow:rgba(255,255,255,.9) 0px 0px 5px;
   -webkit-box-shadow:rgba(255,255,255,.9) 0px 0px 5px;
   -moz-box-shadow:rgba(255,255,255,.9) 0px 0px 5px;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ddffffff, endColorstr=#ddffffff);
   }
 
 input.editable,
