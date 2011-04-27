@@ -1,11 +1,9 @@
-body {
-  margin-top:0px;
+html {
   transition:margin .25s;
   -moz-transition:margin .25s;
   -webkit-transition:margin .25s;
-  }
-
-body.bonesAdmin { margin-top:40px; }
+  }s
+  html.bonesAdmin { margin-top:40px; }
 
 #bonesAdmin,
 #bonesAdmin *,
@@ -37,7 +35,7 @@ select.editable {
   -webkit-box-shadow:rgba(0,0,0,.5) 0px 0px 5px;
   }
 
-body.bonesAdmin #bonesAdminToolbar {
+html.bonesAdmin #bonesAdminToolbar {
   height:40px;
   overflow:visible;
   }
@@ -119,7 +117,7 @@ body.bonesAdmin #bonesAdminToolbar {
   opacity:0;
   filter:alpha(opacity=0);
 
-  background:url(bones-admin.png) -360px 0px no-repeat;
+  background:url(bones.admin.png) -360px 0px no-repeat;
   color:#fff;
   text-indent:-999px;
   overflow:hidden;
@@ -130,15 +128,18 @@ body.bonesAdmin #bonesAdminToolbar {
   transition:opacity .25s;
   -moz-transition:opacity .25s;
   -webkit-transition:opacity .25s;
+  transition:border-radius .5s;
+  -moz-transition:border-radius .5s;
+  -webkit-transition:border-radius .5s;
   }
 
-body.bonesAdmin #bonesAdmin a.toggle,
+html.bonesAdmin #bonesAdmin a.toggle,
 #bonesAdmin a.toggle:hover {
   opacity:1;
   filter:alpha(opacity=100);
   }
 
-body.bonesAdmin #bonesAdmin a.toggle {
+html.bonesAdmin #bonesAdmin a.toggle {
   border-radius:0px;
   -moz-border-radius:0px;
   -webkit-border-radius:0px;
@@ -213,13 +214,13 @@ body.bonesAdmin #bonesAdmin a.toggle {
   }
 
 #bonesAdmin input.editing { display:none; }
-body.bonesAdminEditing #bonesAdmin input.viewing { display:none; }
-body.bonesAdminEditing #bonesAdmin input.editing { display:inline; }
+html.bonesAdminEditing #bonesAdmin input.viewing { display:none; }
+html.bonesAdminEditing #bonesAdmin input.editing { display:inline; }
 
-body.bonesAdminEditing *[contentEditable=true],
-body.bonesAdminEditing input.editable,
-body.bonesAdminEditing select.editable,
-body.bonesAdminEditing textarea.editable {
+html.bonesAdminEditing *[contentEditable=true],
+html.bonesAdminEditing input.editable,
+html.bonesAdminEditing select.editable,
+html.bonesAdminEditing textarea.editable {
   min-height:10px;
   position:relative;
   z-index:10;
@@ -264,7 +265,7 @@ textarea.editable {
   overflow:hidden;
   text-indent:-9999px;
   margin-right:5px;
-  background:url(bones-admin.png) 20px 20px no-repeat;
+  background:url(bones.admin.png) 20px 20px no-repeat;
   }
 
 #bonesAdmin .icon.user { background-position:0px 0px; }
@@ -290,18 +291,18 @@ textarea.editable {
   -webkit-transition:opacity .25s;
   }
 
-body.bonesAdminEditing #bonesAdminOverlay,
-body.bonesAdminModal #bonesAdminOverlay {
+html.bonesAdminEditing #bonesAdminOverlay,
+html.bonesAdminModal #bonesAdminOverlay {
   opacity:0.5;
   filter:alpha(opacity=50);
   z-index:5;
   }
 
-body.bonesAdminModal #bonesAdmin .panel,
-body.bonesAdminModal #bonesAdmin .menus,
-body.bonesAdminModal #bonesAdmin a.toggle,
-body.bonesAdminEditing #bonesAdmin .menus,
-body.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
+html.bonesAdminModal #bonesAdmin .panel,
+html.bonesAdminModal #bonesAdmin .menus,
+html.bonesAdminModal #bonesAdmin a.toggle,
+html.bonesAdminEditing #bonesAdmin .menus,
+html.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
 
 /**
  * # Growl ####################################################################

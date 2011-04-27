@@ -1,4 +1,4 @@
-{{^autoclose}}
+<% if (!autoclose) { %>
     <a class='icon close' href='#close'>Close</a>
-{{/autoclose}}
-{{{message}}}
+<% } %>
+<%= message %>

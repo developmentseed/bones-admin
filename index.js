@@ -1,2 +1,2 @@
-module.exports = require('./bones-admin.server');
-
+var plugin = module.exports = require('bones').plugin(__dirname);
+plugin.load();

@@ -1,0 +1,8 @@
+<table>
+    <thead><tr>
+    <% if (header) { %>
+    <th <% if (className) { %>class='<%= className %>'<% } %>><%= title %></th>
+    <% } %>
+    </tr></thead>
+</table>
+
