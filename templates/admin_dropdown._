@@ -1,10 +1,11 @@
 <a href='#dropdown'>
     <span class='icon down'></span>
     <% if (icon) { %><span class='icon <%= icon %>'></span><% } %>
-    <%= title %>{{title}}
+    <%= title %>
 </a>
+
 <ul>
-    <% _.each(links, function(link) { %>
-        <li><a href='<%= link.href %>'><%= link.title %></a></li>
-    <% }); %>
+<% _.each(links, function(link) { %>
+    <li><a href='<%= link.href %>'><%= link.title %></a></li>
+<% }); %>
 </ul>
