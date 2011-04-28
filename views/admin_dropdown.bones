@@ -20,7 +20,7 @@ view = Backbone.View.extend({
         this.render().trigger('attach');
     },
     render: function () {
-        $(this.el).html(this.template('AdminDropdown', this));
+        $(this.el).html(templates['AdminDropdown'](this));
         return this;
     },
     attach: function () {

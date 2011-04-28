@@ -31,7 +31,7 @@ view = Backbone.View.extend({
         if (this.$('.content').size()) return this;
 
         var that = this;
-        $(this.el).html(this.template('AdminPopup', this));
+        $(this.el).html(templates['AdminPopup'](this));
         this.view && this.$('.content').append(this.view.el);
         this.context.append(this.el);
         $('body')

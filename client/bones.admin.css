@@ -1,20 +1,17 @@
-html {
-  transition:margin .25s;
-  -moz-transition:margin .25s;
-  -webkit-transition:margin .25s;
-  }s
-  html.bonesAdmin { margin-top:40px; }
+html.bonesAdmin { margin-top:40px; }
 
 #bonesAdmin,
-#bonesAdmin *,
 #bonesAdmin select,
 #bonesAdmin input,
 input.editable,
 select.editable {
-  font-family:Arial,Helvetica,sans-serif;
+  font-family:Helvetica, Arial, sans-serif;
   font-size:15px;
   line-height:20px;
   }
+#bonesAdmin a { text-decoration:none; }
+#bonesAdmin ul { list-style:none; }
+#bonesAdmin input { border:0; }
 
 #bonesAdminToolbar {
   position:fixed;
@@ -373,7 +370,11 @@ html.bonesAdminEditing #bonesAdmin a.toggle { display:none; }
   background:#333;
   }
 
-#bonesAdminPopup .header h2 { font-weight:bold; }
+#bonesAdminPopup .header h2 {
+  font-weight:bold;
+  margin:0;
+  font-size:100%;
+}
 
 #bonesAdminPopup .header .close {
   background-color:#222;

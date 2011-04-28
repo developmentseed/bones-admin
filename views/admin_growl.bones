@@ -19,7 +19,7 @@ view = Backbone.View.extend({
     },
     render: function() {
         $(this.el)
-            .html(this.template('AdminGrowl', {
+            .html(templates['AdminGrowl']({
                 message: this.options.message,
                 autoclose: Boolean(this.options.autoclose)
             }))

@@ -18,10 +18,7 @@ view = Backbone.View.extend({
 
     initialize: function(options) {
         _.bindAll(this, 'render', 'attach', 'toggle', 'setPanel', 'error');
-        options = _.defaults(options || {}, {
-            dropdowns: this.dropdowns,
-            auth: this.auth
-        });
+        if (options) _.extend(this, options);
 
         this.model.bind('auth:status', this.render);
         this.model.bind('auth:status', this.attach);
@@ -33,11 +30,10 @@ view = Backbone.View.extend({
     },
 
     attach: function() {
-        $('#' + this.id).remove();
-        $('body').append(this.el);
+        if (!$('#' + this.id).size()) $('body').append(this.el);
 
+        $('html').toggleClass('bonesAdmin', this.model.authenticated);
         if (this.model.authenticated) {
-            $('html').addClass('bonesAdmin');
             _.each(this.dropdowns, function(Dropdown) {
                 new Dropdown({ admin: this, model: this.model });
             }, this);
@@ -62,7 +58,7 @@ view = Backbone.View.extend({
 
     error: function(model, resp) {
         new views['AdminGrowl']({
-            message: (resp instanceof XMLHttpRequest) ? resp.response : resp,
+            message: (resp instanceof XMLHttpRequest) ? resp.responseText : resp,
             classes: 'error',
             autoclose: 0
         });
