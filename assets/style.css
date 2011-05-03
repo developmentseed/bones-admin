@@ -114,7 +114,7 @@ html.bonesAdmin #bonesAdminToolbar {
   opacity:0;
   filter:alpha(opacity=0);
 
-  background:url(bones.admin.png) -360px 0px no-repeat;
+  background:url(sprite.png) -360px 0px no-repeat;
   color:#fff;
   text-indent:-999px;
   overflow:hidden;
@@ -262,7 +262,7 @@ textarea.editable {
   overflow:hidden;
   text-indent:-9999px;
   margin-right:5px;
-  background:url(bones.admin.png) 20px 20px no-repeat;
+  background:url(sprite.png) 20px 20px no-repeat;
   }
 
 #bonesAdmin .icon.user { background-position:0px 0px; }
