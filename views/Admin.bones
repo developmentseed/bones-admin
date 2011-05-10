@@ -57,8 +57,10 @@ view = Backbone.View.extend({
     },
 
     error: function(model, resp) {
+        var message = (resp instanceof Object && resp.responseText) ?
+            resp.status + ' ' + resp.responseText : resp;
         new views['AdminGrowl']({
-            message: (resp instanceof XMLHttpRequest) ? resp.responseText : resp,
+            message: message,
             classes: 'error',
             autoclose: 0
         });
