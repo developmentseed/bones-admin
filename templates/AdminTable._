@@ -1,7 +1,7 @@
 <table>
     <thead><tr>
-    <% if (header) { %>
-    <th <% if (className) { %>class='<%= className %>'<% } %>><%= title %></th>
-    <% } %>
+    <% if (header) { _.forEach(header, function(v) {%>
+    <th <% if (v.className) { %>class='<%= v.className %>'<% } %>><%= v.title %></th>
+    <% }); } %>
     </tr></thead>
 </table>
