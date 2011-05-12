@@ -215,9 +215,7 @@ html.bonesAdminEditing #bonesAdmin input.viewing { display:none; }
 html.bonesAdminEditing #bonesAdmin input.editing { display:inline; }
 
 html.bonesAdminEditing *[contentEditable=true],
-html.bonesAdminEditing input.editable,
-html.bonesAdminEditing select.editable,
-html.bonesAdminEditing textarea.editable {
+html.bonesAdminEditing .editable {
   min-height:10px;
   position:relative;
   z-index:10;
