@@ -84,8 +84,7 @@ html.bonesAdmin #bonesAdminToolbar {
 #bonesAdmin .dropdown.expanded > a { background:#222; }
 
 #bonesAdmin .dropdown ul {
-  height:1px;
-  margin:-1px 0px 0px;
+  margin: 0px;
   padding:0px;
   position: absolute;
   left: -999em;
@@ -95,8 +94,6 @@ html.bonesAdmin #bonesAdminToolbar {
   }
 
 #bonesAdmin .dropdown.expanded ul {
-  height:auto;
-  margin:0px;
   left: 0;
   padding:0px 0px 10px;
   background:#333;
