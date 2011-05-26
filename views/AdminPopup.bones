@@ -29,7 +29,6 @@ view = Backbone.View.extend({
     },
     render: function () {
         if (this.$('.content').size()) return this;
-
         var that = this;
         $(this.el).html(templates['AdminPopup'](this));
         this.view && this.$('.content').append(this.view.el);
@@ -45,7 +44,9 @@ view = Backbone.View.extend({
         $('body')
             .removeClass('bonesAdminModal')
             .unbind('.AdminPopup');
-        $(this.el).fadeOut(250, this.remove);
+        $(this.el).fadeOut(250, function(){
+            $(this).remove();
+        });
         return false;
     }
 });
