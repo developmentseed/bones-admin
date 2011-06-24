@@ -151,6 +151,7 @@ html.bonesAdmin #bonesAdmin a.toggle {
 #bonesAdminToolbar form.login { float:right; }
 
 #bonesAdmin select,
+#bonesAdmin textarea,
 #bonesAdmin input[type=text],
 #bonesAdmin input[type=password] {
   vertical-align:middle;
