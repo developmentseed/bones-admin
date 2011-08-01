@@ -17,19 +17,14 @@ view = Backbone.View.extend({
     },
 
     initialize: function(options) {
-        _.bindAll(this, 'render', 'attach', 'toggle', 'setPanel', 'error');
+        _.bindAll(this, 'render', 'toggle', 'setPanel', 'error');
         if (options) _.extend(this, options);
 
         this.model.bind('auth:status', this.render);
-        this.model.bind('auth:status', this.attach);
     },
 
     render: function() {
         $(this.el).html(templates['Admin'](this.model));
-        return this;
-    },
-
-    attach: function() {
         if (!$('#' + this.id).size()) $('body').append(this.el);
 
         $('html').toggleClass('bonesAdmin', this.model.authenticated);

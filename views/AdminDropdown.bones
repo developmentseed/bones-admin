@@ -13,18 +13,15 @@ view = Backbone.View.extend({
         'click .dropdown ul a': 'dropdown'
     },
     initialize: function (options) {
-        _.bindAll(this, 'render', 'attach', 'dropdown');
+        _.bindAll(this, 'render', 'dropdown');
         options = options || {};
         this.admin = options.admin || null;
         this.context = options.context || $('#bonesAdminToolbar .menus');
-        this.render().trigger('attach');
+        this.render();
     },
     render: function () {
         this.links = _.isFunction(this.links) ? this.links() : this.links || [];
         $(this.el).html(templates['AdminDropdown'](this));
-        return this;
-    },
-    attach: function () {
         this.context.prepend(this.el);
         return this;
     },
