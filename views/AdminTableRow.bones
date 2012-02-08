@@ -11,7 +11,7 @@ view = Backbone.View.extend({
         this.render();
     },
     render: function () {
-        $(this.el).html(this.template('AdminTableRow', this.model));
+        $(this.el).html(templates['AdminTableRow'](this.model));
         return this;
     },
     del: function() {
